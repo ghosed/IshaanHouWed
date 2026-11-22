@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ishaan & Pavani • Houston Wedding Command Center</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Playfair Display for wedding header elegance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: {
+              DEFAULT: '#6B1D2F',
+              dark: '#4F1321',
+              light: '#8E2840',
+              tint: '#FDF2F4',
+            },
+            gold: {
+              DEFAULT: '#D4AF37',
+              dark: '#B59224',
+              light: '#FBF6E6',
+            },
+            ivory: '#FAF8F5',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Custom scrollbar hiding for horizontal pill strips on mobile */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Smooth card transitions */
+    .task-card {
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.2s ease;
+    }
+    .task-card:active {
+      transform: scale(0.995);
+    }
+  </style>
+</head>
+<body class="bg-ivory text-slate-800 font-sans antialiased selection:bg-maroon selection:text-white pb-24">
+
+  <!-- ===================================================================== -->
+  <!-- STICKY TOP HEADER: Brand, Live Progress Bar & Escalation Drawer Trigger -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-maroon text-white shadow-lg border-b-2 border-gold">
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 py-3">
+      <div class="flex items-center justify-between gap-2">
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-gold">
+            <span>Nov 25–29, 2026</span>
+            <span>•</span>
+            <span>Houston, TX</span>
+          </div>
+          <h1 class="font-serif text-lg sm:text-2xl font-bold tracking-tight text-white truncate">
+            Ishaan &amp; Pavani • Houston Wedding Command Center
+          </h1>
+        </div>
+
+        <!-- Escalation & Quick Dial Trigger Button -->
+        <button
+          id="open-drawer-btn"
+          type="button"
+          class="shrink-0 inline-flex items-center gap-1.5 bg-gold hover:bg-gold-dark text-slate-950 font-bold text-xs sm:text-sm px-3 py-2.5 sm:px-4 sm:py-2.5 rounded-xl shadow-md transition active:scale-95 cursor-pointer"
+          aria-label="Open Escalation and Quick Dial Directory"
+        >
+          <i data-lucide="phone-call" class="w-4 h-4 stroke-[2.5]"></i>
+          <span class="hidden xs:inline sm:inline">Escalation &amp; Quick Dial</span>
+          <span class="inline sm:hidden">Quick Dial</span>
+        </button>
+      </div>
+
+      <!-- Live Completion Progress Bar -->
+      <div class="mt-2.5 pt-2 border-t border-white/15">
+        <div class="flex items-center justify-between text-xs font-medium mb-1">
+          <span id="progress-label" class="text-white/95 font-semibold">0 / 47 Tasks Complete</span>
+          <span id="progress-percent" class="text-gold font-bold">0%</span>
+        </div>
+        <div class="w-full h-2 bg-maroon-dark rounded-full overflow-hidden">
+          <div
+            id="progress-bar-fill"
+            class="h-full bg-gold rounded-full transition-all duration-300 ease-out"
+            style="width: 0%"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- STICKY FILTER & SEARCH CONTROL BAR                                    -->
+  <!-- ===================================================================== -->
+  <section class="sticky top-[98px] sm:top-[106px] z-30 bg-ivory/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm">
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 py-2.5 space-y-2.5">
+      
+      <!-- Row 1: Day Filter Pills (Horizontal Scroll on Mobile) -->
+      <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5" role="tablist" aria-label="Filter by Event Day">
+        <button type="button" data-day="all" class="day-pill active-day shrink-0 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer bg-maroon text-white shadow-sm">
+          All Days
+        </button>
+        <button type="button" data-day="wed-thu" class="day-pill shrink-0 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-300 hover:border-maroon">
+          Wed/Thu (Nov 25–26)
+        </button>
+        <button type="button" data-day="fri" class="day-pill shrink-0 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-300 hover:border-maroon">
+          Fri Wedding (Nov 27)
+        </button>
+        <button type="button" data-day="sat" class="day-pill shrink-0 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-300 hover:border-maroon">
+          Sat Reception (Nov 28)
+        </button>
+        <button type="button" data-day="sun" class="day-pill shrink-0 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-300 hover:border-maroon">
+          Sun (Nov 29)
+        </button>
+      </div>
+
+      <!-- Row 2: Category Tabs -->
+      <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar" role="tablist" aria-label="Filter by Category">
+        <button type="button" data-cat="all" class="cat-tab active-cat shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-slate-800 text-white">
+          All Tasks
+        </button>
+        <button type="button" data-cat="Ceremony Ritual" class="cat-tab shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-200 hover:bg-slate-100">
+          🪔 Ceremony Rituals
+        </button>
+        <button type="button" data-cat="Logistics" class="cat-tab shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-200 hover:bg-slate-100">
+          📋 Logistics &amp; Setup
+        </button>
+        <button type="button" data-cat="Vendor" class="cat-tab shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-200 hover:bg-slate-100">
+          🤝 Vendors Only
+        </button>
+      </div>
+
+      <!-- Row 3: Person ("My Tasks") Dropdown, Live Search & Hide Completed Toggle -->
+      <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+        <!-- Person Filter Dropdown -->
+        <div class="sm:col-span-4 relative">
+          <label for="person-filter" class="sr-only">Filter by Person or Vendor</label>
+          <div class="relative flex items-center">
+            <i data-lucide="user-check" class="w-4 h-4 text-maroon absolute left-3 pointer-events-none"></i>
+            <select
+              id="person-filter"
+              class="w-full pl-9 pr-8 py-2 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-maroon focus:border-maroon appearance-none cursor-pointer"
+            >
+              <option value="all">👤 My Tasks: Everyone (All Leads)</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-500 absolute right-2.5 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <!-- Keyword Search Input -->
+        <div class="sm:col-span-5 relative">
+          <label for="search-input" class="sr-only">Search tasks, locations, or notes</label>
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search tasks, Durgabari, paan, Hyatt..."
+            class="w-full pl-9 pr-8 py-2 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-maroon focus:border-maroon"
+          />
+          <button
+            id="clear-search-btn"
+            type="button"
+            class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-1 cursor-pointer"
+            aria-label="Clear search"
+          >
+            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- Hide Completed Toggle & Share Action -->
+        <div class="sm:col-span-3 flex items-center justify-between sm:justify-end gap-2">
+          <label class="inline-flex items-center gap-2 cursor-pointer select-none bg-white border border-slate-200 px-2.5 py-2 rounded-xl">
+            <input id="hide-completed-toggle" type="checkbox" class="sr-only peer" />
+            <div class="w-8 h-4 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all relative peer-checked:bg-maroon"></div>
+            <span class="text-xs font-semibold text-slate-700 whitespace-nowrap">Hide Done</span>
+          </label>
+
+          <button
+            id="export-status-btn"
+            type="button"
+            title="Copy status summary for WhatsApp"
+            class="inline-flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm transition active:scale-95 cursor-pointer shrink-0"
+          >
+            <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+            <span>Share</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN CONTENT CONTAINER                                                -->
+  <!-- ===================================================================== -->
+  <main class="max-w-5xl mx-auto px-3 sm:px-6 pt-4 space-y-5">
+
+    <!-- Active Filter Summary & Reset Strip -->
+    <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
+      <div id="filter-status-text" class="font-medium">
+        Showing all <span class="font-bold text-slate-900">47</span> tasks
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="reset-filters-btn" type="button" class="hidden text-maroon font-bold hover:underline cursor-pointer">
+          Reset Filters
+        </button>
+        <button id="reset-progress-btn" type="button" class="text-slate-400 hover:text-red-700 font-medium transition cursor-pointer">
+          Clear Checkmarks
+        </button>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- DEDICATED CEREMONY RITUALS CUE SHEET BANNER (Friday / Rituals View)  -->
+    <!-- =================================================================== -->
+    <section
+      id="ritual-cue-banner"
+      class="hidden bg-gradient-to-br from-maroon via-maroon-dark to-[#3B0D18] text-white rounded-2xl p-4 sm:p-5 shadow-md border border-gold/50"
+    >
+      <div class="flex items-start justify-between gap-3 mb-3">
+        <div>
+          <span class="inline-block text-[10px] font-bold uppercase tracking-widest bg-gold text-slate-950 px-2 py-0.5 rounded-md mb-1">
+            Friday Ceremony Cue Sheet • ~5:30 PM – 7:00 PM
+          </span>
+          <h2 class="font-serif text-lg sm:text-xl font-bold text-white">
+            Durgabari Mandap Ritual Sequence
+          </h2>
+          <p class="text-xs text-white/80 mt-0.5">
+            Quick visual sequence for family leads &amp; priest Buddhadev da
+          </p>
+        </div>
+        <button
+          id="toggle-cue-details"
+          type="button"
+          class="text-xs font-semibold text-gold hover:underline shrink-0 cursor-pointer"
+        >
+          Collapse
+        </button>
+      </div>
+
+      <div id="cue-steps-container" class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/15">
+          <div class="font-bold text-gold">1. Bor Agaman (~5:30 PM)</div>
+          <div class="text-white/90 mt-0.5">Rik, Ribhu, Gitu escort Groom + Tiklu on Dhaak.</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/15">
+          <div class="font-bold text-gold">2. Groom Boron (~5:30 PM)</div>
+          <div class="text-white/90 mt-0.5">Lakshmi &amp; Ruma Choudhury + 7 married ladies (Mou carries Shree, Mahua tatwa).</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/15">
+          <div class="font-bold text-gold">3. Kanya Agaman</div>
+          <div class="text-white/90 mt-0.5">Father &amp; Praneet lead Bride, followed by Mother, Sister, Aadya.</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/15">
+          <div class="font-bold text-gold">4. Subha Dristi</div>
+          <div class="text-white/90 mt-0.5">Dhruba &amp; Samik (Chadna Tola) + 2 Pandravada guys (white cloth).</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/15">
+          <div class="font-bold text-gold">5. Vows &amp; Khoi</div>
+          <div class="text-white/90 mt-0.5">Pavani's Brother provides Khoi (4 rounds around fire) → Saptapadi.</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/15">
+          <div class="font-bold text-gold">6. Gatchara Bandha</div>
+          <div class="text-white/90 mt-0.5">Trisha / Sasi tie Gatchara knot, assisted by Mimidi.</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/15">
+          <div class="font-bold text-gold">7. Sindoor &amp; Lojja Bastra</div>
+          <div class="text-white/90 mt-0.5">Seema &amp; Piyali assist (Formal Sindur Daan done in Chicago).</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/15">
+          <div class="font-bold text-gold">8. Mishti Mukh</div>
+          <div class="text-white/90 mt-0.5">Chaitali &amp; Monalisa perform while Aadya sits on Pavani's lap.</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/15">
+          <div class="font-bold text-gold">9. Ashirbaad &amp; Dhrubo Darshan</div>
+          <div class="text-white/90 mt-0.5">Monica, Papia &amp; Paromita (7:00 PM; star viewing outside temple).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TASK CARDS LIST CONTAINER                                           -->
+    <!-- =================================================================== -->
+    <div id="task-list-container" class="space-y-3">
+      <!-- Task cards rendered dynamically via JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="hidden bg-white rounded-2xl border border-slate-200 p-8 text-center shadow-sm">
+      <div class="w-12 h-12 rounded-full bg-maroon-tint text-maroon mx-auto flex items-center justify-center mb-3">
+        <i data-lucide="search-x" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-base font-bold text-slate-900">No matching tasks found</h3>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-md mx-auto">
+        Try clearing your search term, selecting "All Days", or turning off "Hide Done".
+      </p>
+      <button
+        id="empty-reset-btn"
+        type="button"
+        class="mt-4 inline-flex items-center gap-1.5 bg-maroon text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm hover:bg-maroon-dark transition cursor-pointer"
+      >
+        Show All Tasks
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- ESCALATION & VENDOR QUICK-DIAL SLIDE-OVER DRAWER / MODAL              -->
+  <!-- ===================================================================== -->
+  <div
+    id="quick-dial-modal"
+    class="fixed inset-0 z-50 hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="drawer-title"
+  >
+    <!-- Backdrop -->
+    <div id="drawer-backdrop" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity"></div>
+
+    <!-- Slide-Over Panel -->
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-6 sm:pl-16">
+      <div class="w-screen max-w-md bg-ivory shadow-2xl flex flex-col h-full border-l border-slate-200">
+        
+        <!-- Drawer Header -->
+        <div class="bg-maroon text-white px-4 py-4 flex items-center justify-between border-b-2 border-gold shrink-0">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-gold">Emergency &amp; Vendor Directory</span>
+            <h2 id="drawer-title" class="font-serif text-lg font-bold">Escalation &amp; Quick Dial</h2>
+          </div>
+          <button
+            id="close-drawer-btn"
+            type="button"
+            class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
+            aria-label="Close directory"
+          >
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Drawer Scrollable Body -->
+        <div class="flex-1 overflow-y-auto p-4 space-y-5">
+          
+          <!-- Pinned Escalation Contacts Card -->
+          <div class="bg-gold-light border border-gold/60 rounded-2xl p-3.5 shadow-xs space-y-2.5">
+            <div class="flex items-center gap-2 text-maroon font-bold text-xs uppercase tracking-wider">
+              <i data-lucide="shield-alert" class="w-4 h-4"></i>
+              <span>Command &amp; Escalation Leads</span>
+            </div>
+
+            <div class="bg-white rounded-xl p-3 border border-amber-200/80 space-y-2 text-xs">
+              <div>
+                <span class="text-[11px] font-bold uppercase text-maroon">Primary Event Leads</span>
+                <p class="font-bold text-slate-900 text-sm">Partha &amp; Arpita</p>
+                <p class="text-slate-600">Overall wedding &amp; reception decisions, Hyatt timing confirmation.</p>
+              </div>
+              <div class="border-t border-slate-100 pt-2">
+                <span class="text-[11px] font-bold uppercase text-amber-800">Secondary Escalation (Fri &amp; Sat)</span>
+                <p class="font-bold text-slate-900 text-sm">Tapan &amp; Dhruba</p>
+                <p class="text-slate-600">Main escalation points of contact for Hyatt hotel &amp; Wedding Planner.</p>
+              </div>
+              <div class="border-t border-slate-100 pt-2 bg-maroon-tint/60 -mx-1 px-2 py-1.5 rounded-lg">
+                <span class="text-[11px] font-bold uppercase text-maroon">🔑 Durgabari Venue Access Note</span>
+                <p class="text-slate-700 mt-0.5">
+                  <strong>Firoze Blossom</strong> arrives Thanksgiving Thursday at <strong>10:00 AM</strong>. Durgabari will be open — <strong>Maricella</strong> has the access/door code and Durgabari crew is on-site per rental.
+                </p>
+                <a
+                  href="tel:832-480-7789"
+                  class="mt-2 inline-flex items-center gap-1.5 bg-maroon text-white font-bold px-3 py-1.5 rounded-lg text-xs hover:bg-maroon-dark transition"
+                >
+                  <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+                  Call Maricella: 832-480-7789
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Full Vendor Quick-Dial List -->
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-600">
+                All 13 Wedding &amp; Reception Vendors
+              </h3>
+              <span class="text-[11px] font-semibold text-maroon">Tap to Call</span>
+            </div>
+
+            <div id="vendor-directory-list" class="space-y-2">
+              <!-- Populated dynamically from vendor data -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- TOAST NOTIFICATION BANNER (Clipboard / Status Feedback)               -->
+  <!-- ===================================================================== -->
+  <div
+    id="toast-banner"
+    class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-2 bg-slate-900 text-white text-xs sm:text-sm font-semibold px-4 py-3 rounded-2xl shadow-xl border border-white/15 max-w-[92vw]"
+  >
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+    <span id="toast-message">Status copied to clipboard!</span>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- CONFIRMATION MODAL FOR CLEARING CHECKMARKS (No alert/confirm used)    -->
+  <!-- ===================================================================== -->
+  <div
+    id="confirm-reset-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-200">
+      <h3 class="font-serif text-lg font-bold text-slate-900">Clear All Checkmarks?</h3>
+      <p class="text-xs sm:text-sm text-slate-600 mt-1.5">
+        This will reset all completed tasks on this device back to pending. This action cannot be undone.
+      </p>
+      <div class="mt-4 flex items-center justify-end gap-2">
+        <button
+          id="cancel-reset-btn"
+          type="button"
+          class="px-4 py-2 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 cursor-pointer"
+        >
+          Cancel
+        </button>
+        <button
+          id="confirm-reset-btn"
+          type="button"
+          class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-red-700 hover:bg-red-800 cursor-pointer"
+        >
+          Yes, Clear All
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION DATA & INTERACTIVE LOGIC                                  -->
+  <!-- ===================================================================== -->
+  <script>
+    // Complete dataset of 47 tasks with integrated follow-up notes & phone numbers
+    const TASKS = [
+      {
+        id: 1,
+        owner: "Samik / (Partha)",
+        people: ["Samik", "Partha", "Arpita"],
+        task: "Drop off gift bags, soft drinks, and snacks to the Hyatt hotel",
+        dayLabel: "Wed / Thu (Nov 25–26)",
+        dayKey: "wed-thu",
+        time: "Morning",
+        location: "Hyatt Hotel",
+        category: "Logistics",
+        remarks: "Partha/Arpita to confirm exact details and timing.",
+        phone: ""
+      },
+      {
+        id: 2,
+        owner: "Firoze Blossom",
+        people: ["Firoze Blossom", "Maricella"],
+        task: "Arrive at Durgabari for initial Thanksgiving Thursday setup",
+        dayLabel: "Thursday (Nov 26)",
+        dayKey: "wed-thu",
+        time: "10:00 AM",
+        location: "Durgabari",
+        category: "Vendor",
+        remarks: "Durgabari will be open; Maricella has the access code and Durgabari crew will be on-site as part of rental.",
+        phone: "832-433-5469"
+      },
+      {
+        id: 3,
+        owner: "Leya",
+        people: ["Leya", "Partha"],
+        task: "Pick up wedding items (piri, alpona, etc.) from Partha's home and keep safely",
+        dayLabel: "Thursday (Nov 26)",
+        dayKey: "wed-thu",
+        time: "Morning",
+        location: "Off-Site",
+        category: "Logistics",
+        remarks: "Must bring these items to Durgabari on Friday.",
+        phone: ""
+      },
+      {
+        id: 4,
+        owner: "Moumita",
+        people: ["Moumita"],
+        task: "Deliver lunch for Mehendi event",
+        dayLabel: "Thursday (Nov 26)",
+        dayKey: "wed-thu",
+        time: "Lunchtime",
+        location: "Sugarland",
+        category: "Vendor",
+        remarks: "Delivery location: Sugarland.",
+        phone: "929-243-0347"
+      },
+      {
+        id: 5,
+        owner: "Tapan",
+        people: ["Tapan"],
+        task: "Estimate water bottle requirements for hotel hospitality",
+        dayLabel: "Prior to Friday (Nov 27)",
+        dayKey: "wed-thu",
+        time: "Before event starts",
+        location: "Hyatt Hotel",
+        category: "Logistics",
+        remarks: "Needed for hospitality room and boxed meals.",
+        phone: ""
+      },
+      {
+        id: 6,
+        owner: "Dhruba, Pai / Jaws",
+        people: ["Dhruba", "Pai", "Jaws"],
+        task: "Manage breakfast service in the Hyatt hospitality room",
+        dayLabel: "Fri–Sun (Nov 27–29)",
+        dayKey: "fri",
+        multiDays: ["fri", "sat", "sun"],
+        time: "Morning",
+        location: "Hyatt Hotel",
+        category: "Logistics",
+        remarks: "Oversee food and setup for hotel guests across Friday, Saturday, and Sunday mornings.",
+        phone: ""
+      },
+      {
+        id: 7,
+        owner: "Moumita",
+        people: ["Moumita"],
+        task: "Provide Friday boxed brunch/lunch for hotel guests",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "Morning / Brunch",
+        location: "Hyatt Hotel",
+        category: "Vendor",
+        remarks: "Menu: Gandharaj polao, Chanar Kofta, Dahi Kabab, soufflé.",
+        phone: "929-243-0347"
+      },
+      {
+        id: 8,
+        owner: "Firoze Blossom",
+        people: ["Firoze Blossom"],
+        task: "Complete morning decoration and table setup at Durgabari",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "Morning",
+        location: "Durgabari",
+        category: "Vendor",
+        remarks: "Put table numbers; prioritize bride's side.",
+        phone: "832-433-5469"
+      },
+      {
+        id: 9,
+        owner: "Mita Shome & Partha",
+        people: ["Mita Shome", "Partha", "Buddhadev da"],
+        task: "Help priest set up for wedding; bring items from temple to stage",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "11:00 AM",
+        location: "Durgabari",
+        category: "Logistics",
+        remarks: "Coordinate with Buddhadev da.",
+        phone: ""
+      },
+      {
+        id: 10,
+        owner: "Sakshi",
+        people: ["Sakshi"],
+        task: "Bridal makeup at the hotel",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "Starts 12:00 PM",
+        location: "Hyatt Hotel",
+        category: "Vendor",
+        remarks: "Bridal hair and makeup session at Hyatt.",
+        phone: "832-523-8504"
+      },
+      {
+        id: 11,
+        owner: "Vicky Flower",
+        people: ["Vicky Flower"],
+        task: "Deliver mala (garlands) and flowers to the hotel",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "2:00 PM",
+        location: "Hyatt Hotel",
+        category: "Vendor",
+        remarks: "Deliver directly to Hyatt Hotel.",
+        phone: "713-298-2817"
+      },
+      {
+        id: 12,
+        owner: "Mita Shome & Buddhadev da",
+        people: ["Mita Shome", "Buddhadev da"],
+        task: "Complete wedding setup and place Ganesh Idol at the entrance",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "3:00 PM – 4:00 PM",
+        location: "Durgabari",
+        category: "Logistics",
+        remarks: "Family arrives by 4:00 PM.",
+        phone: ""
+      },
+      {
+        id: 13,
+        owner: "Hemant / Monica",
+        people: ["Hemant", "Monica"],
+        task: "Pick up paan from Raja Sweets (Hillcroft) and deliver to Durgabari",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "3:00 PM",
+        location: "Off-Site → Durgabari",
+        category: "Logistics",
+        remarks: "Deliver directly to venue.",
+        phone: ""
+      },
+      {
+        id: 14,
+        owner: "Maricella",
+        people: ["Maricella", "Nirvana (Monsour)"],
+        task: "Pick up Raakhee food and hand over to Nirvana to warm up",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "3:30 PM",
+        location: "Off-Site → Durgabari",
+        category: "Logistics",
+        remarks: "Hand off to Nirvana (Monsour) upon arrival.",
+        phone: "832-480-7789"
+      },
+      {
+        id: 15,
+        owner: "Munni & Mou",
+        people: ["Munni", "Mou"],
+        task: "Drop off \"Shree\" at Durgabari and carry in procession",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "Before 5:00 PM",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Munni is responsible for bringing the Shree to Durgabari; Mou will carry it in the procession to the Mandap with other married ladies.",
+        phone: ""
+      },
+      {
+        id: 16,
+        owner: "Maricella",
+        people: ["Maricella"],
+        task: "Set up reserved seating for Pavani family (Meyer Bari)",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "5:00 PM",
+        location: "Durgabari",
+        category: "Logistics",
+        remarks: "Ensure clear signage/placement.",
+        phone: "832-480-7789"
+      },
+      {
+        id: 17,
+        owner: "Tapan, Dhruba, Ravi, Samik & friends",
+        people: ["Tapan", "Dhruba", "Ravi", "Samik"],
+        task: "Receive Pavani family (Meyer Bari) at the Durgabari foyer entrance",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "5:00 PM",
+        location: "Durgabari",
+        category: "Logistics",
+        remarks: "Samik/Ravi also act as dedicated family chaperones.",
+        phone: ""
+      },
+      {
+        id: 18,
+        owner: "Trisha, Riya, Diya, Kuhu & girls",
+        people: ["Trisha", "Riya", "Diya", "Kuhu"],
+        task: "Welcome Meyer Bari with flowers at the entrance",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "5:00 PM",
+        location: "Durgabari",
+        category: "Logistics",
+        remarks: "Coordinate with foyer welcoming committee.",
+        phone: ""
+      },
+      {
+        id: 19,
+        owner: "Nirvana (Monsour)",
+        people: ["Nirvana (Monsour)", "Maricella"],
+        task: "Provide water bottles at foyer; serve Masala Tea & biscuits in auditorium foyer",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "5:00 PM",
+        location: "Durgabari",
+        category: "Vendor",
+        remarks: "Use small cups; Maricella to assist.",
+        phone: "832-882-1789"
+      },
+      {
+        id: 20,
+        owner: "Chris Peltier & Rajiv",
+        people: ["Chris Peltier", "Rajiv"],
+        task: "Manage stage lighting, microphones, and wedding music",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "Until 10:30 PM",
+        location: "Durgabari",
+        category: "Vendor",
+        remarks: "Sound & stage AV support throughout wedding & dinner.",
+        phone: "713-296-9050"
+      },
+      {
+        id: 21,
+        owner: "Mother, Sister, Trisha",
+        people: ["Mother", "Sister", "Trisha"],
+        task: "Accompany bride in the TSH / EB Room prior to ceremony",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "5:30 PM",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Bride holding room.",
+        phone: ""
+      },
+      {
+        id: 22,
+        owner: "Rik, Ribhu, Gitu & Tiklu",
+        people: ["Rik", "Ribhu", "Gitu", "Tiklu"],
+        task: "Escort Groom (Bor) during entrance (Bor Agaman)",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "~5:30 PM",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Accompanied by Tiklu playing Dhaak.",
+        phone: ""
+      },
+      {
+        id: 23,
+        owner: "Lakshmi & Ruma Choudhury",
+        people: ["Lakshmi", "Ruma Choudhury", "Nagmani", "Mou", "Kiku", "Munmun", "Nanditadi", "Mahua"],
+        task: "Perform Boron welcome for the groom",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "~5:30 PM",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Followed by 7 married women (Lakshmi, Nagmani, Mou, Kiku, Munmun, Nanditadi, Mahua holding tatwa; Mou carrying Shree).",
+        phone: ""
+      },
+      {
+        id: 24,
+        owner: "Father, Praneet, Mother, Sister, Aadya",
+        people: ["Father", "Praneet", "Mother", "Sister", "Aadya"],
+        task: "Escort Bride for Kanya Agaman",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "During ceremony",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Father and Praneet lead, followed by Mother, Sister, and Aadya.",
+        phone: ""
+      },
+      {
+        id: 25,
+        owner: "Dhruba, Samik & 2 Pandravada guys",
+        people: ["Dhruba", "Samik"],
+        task: "Hold Chadna Tola (Chatterjee side) and white cloth (Pandravada side)",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "During Subha Dristi",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Two tall guys from each side.",
+        phone: ""
+      },
+      {
+        id: 26,
+        owner: "Buddhadev da (Priest)",
+        people: ["Buddhadev da", "Partha"],
+        task: "Officiate wedding program, Narayan Puja, Vows, and Hom",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "Until 7:00 PM",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Bring required wedding items alongside Partha.",
+        phone: ""
+      },
+      {
+        id: 27,
+        owner: "Pavani's Brother",
+        people: ["Pavani's Brother"],
+        task: "Provide Khoi during wedding vows/rounds",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "During ceremony",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "4 rounds around fire with Khoi, then Saptapadi.",
+        phone: ""
+      },
+      {
+        id: 28,
+        owner: "Trisha / Sasi & Mimidi",
+        people: ["Trisha", "Sasi", "Mimidi"],
+        task: "Tie Gatchara bandha",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "During ceremony",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Trisha/Sasi tie, assisted by Mimidi.",
+        phone: ""
+      },
+      {
+        id: 29,
+        owner: "Seema & Piyali",
+        people: ["Seema", "Piyali"],
+        task: "Assist with Sindoor Daan and Lojja Bastra",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "During ceremony",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Note: Formal Sindur Daan was already done in Chicago.",
+        phone: ""
+      },
+      {
+        id: 30,
+        owner: "Chaitali & Monalisa",
+        people: ["Chaitali", "Monalisa", "Aadya"],
+        task: "Perform Mishti Mukh",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "During ceremony",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Aadya sits on Pavani’s lap.",
+        phone: ""
+      },
+      {
+        id: 31,
+        owner: "Monica, Papia & Paromita",
+        people: ["Monica", "Papia", "Paromita"],
+        task: "Perform Ashirbaad (hold dhaan durba) and Dhrubo Darshan (star viewing)",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "7:00 PM",
+        location: "Durgabari",
+        category: "Ceremony Ritual",
+        remarks: "Dhrubo Darshan takes place outside the temple.",
+        phone: ""
+      },
+      {
+        id: 32,
+        owner: "Chris / Rajiv",
+        people: ["Chris Peltier", "Rajiv", "Kaushlesh Biyani"],
+        task: "Play Chicago wedding video (by Kaushlesh Biyani) during cocktail hour",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "7:00 PM – 8:00 PM",
+        location: "Durgabari",
+        category: "Vendor",
+        remarks: "Played during 7:00–8:00 PM mingling/appetizers.",
+        phone: "713-296-9050"
+      },
+      {
+        id: 33,
+        owner: "Maricella",
+        people: ["Maricella"],
+        task: "Set up 5 cocktail tables & 25 chairs outside; clean auditorium/bathrooms, refill water, set silverware/napkins",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "By 8:00 PM",
+        location: "Durgabari",
+        category: "Logistics",
+        remarks: "Must be finished before auditorium doors open at 8:00 PM.",
+        phone: "832-480-7789"
+      },
+      {
+        id: 34,
+        owner: "Partha",
+        people: ["Partha"],
+        task: "Act as English MC for wedding ceremony; make auditorium announcements",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "8:30 PM",
+        location: "Durgabari",
+        category: "Logistics",
+        remarks: "Announce Sandhya Arati at temple post-ceremony.",
+        phone: ""
+      },
+      {
+        id: 35,
+        owner: "Leya",
+        people: ["Leya"],
+        task: "Announce dinner service at 8:30 PM by table number",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "8:30 PM",
+        location: "Durgabari",
+        category: "Logistics",
+        remarks: "Buffet on both sides inside auditorium.",
+        phone: ""
+      },
+      {
+        id: 36,
+        owner: "Core Team Members",
+        people: ["Core Team Members"],
+        task: "Ensure guests take seats and manage buffet line flow by table number",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "Until 9:30 PM",
+        location: "Durgabari",
+        category: "Logistics",
+        remarks: "Politely manage people lining up early.",
+        phone: ""
+      },
+      {
+        id: 37,
+        owner: "Trisha & Partha / Arpita",
+        people: ["Trisha", "Partha", "Arpita"],
+        task: "Trisha to MC evening program; Partha/Arpita to give Thank You speech",
+        dayLabel: "Friday (Nov 27)",
+        dayKey: "fri",
+        time: "10:00 PM",
+        location: "Durgabari",
+        category: "Logistics",
+        remarks: "Post-dinner adda moves to Hyatt lobby at 10:30 PM.",
+        phone: ""
+      },
+      {
+        id: 38,
+        owner: "Rahi Restaurant",
+        people: ["Rahi Restaurant", "Maricella"],
+        task: "Live Chole Bhature brunch station at Hyatt",
+        dayLabel: "Saturday (Nov 28)",
+        dayKey: "sat",
+        time: "11:00 AM+",
+        location: "Hyatt Hotel",
+        category: "Vendor",
+        remarks: "Hotel provides Masala Tea; Maricella helps serve.",
+        phone: "469-922-8256"
+      },
+      {
+        id: 39,
+        owner: "Sakshi",
+        people: ["Sakshi"],
+        task: "Reception makeup at the hotel",
+        dayLabel: "Saturday (Nov 28)",
+        dayKey: "sat",
+        time: "Starts 12:00 PM",
+        location: "Hyatt Hotel",
+        category: "Vendor",
+        remarks: "Reception hair and makeup session at Hyatt.",
+        phone: "832-523-8504"
+      },
+      {
+        id: 40,
+        owner: "Miraj (Evermore Décor)",
+        people: ["Miraj (Evermore Décor)"],
+        task: "Complete ballroom reception décor setup",
+        dayLabel: "Saturday (Nov 28)",
+        dayKey: "sat",
+        time: "Before 5:00 PM",
+        location: "Hyatt Hotel",
+        category: "Vendor",
+        remarks: "Hyatt ballroom décor installation.",
+        phone: "832-779-3333"
+      },
+      {
+        id: 41,
+        owner: "Maricella",
+        people: ["Maricella"],
+        task: "Pick up wedding cake from Mumu and deliver to Hyatt",
+        dayLabel: "Saturday (Nov 28)",
+        dayKey: "sat",
+        time: "Before 7:00 PM",
+        location: "Off-Site → Hyatt Hotel",
+        category: "Logistics",
+        remarks: "Needed for Reception Program cake cutting.",
+        phone: "832-480-7789"
+      },
+      {
+        id: 42,
+        owner: "Hyatt Hotel Staff",
+        people: ["Hyatt Hotel Staff"],
+        task: "Operate 3 foyer bars (5:30–6:30 PM), move 2 bars inside ballroom, and circulate tray-passed wine during dinner",
+        dayLabel: "Saturday (Nov 28)",
+        dayKey: "sat",
+        time: "Until 11:00 PM",
+        location: "Hyatt Hotel",
+        category: "Vendor",
+        remarks: "Consumption basis (est. 550 drinks); serve preselected red/white wine at tables.",
+        phone: ""
+      },
+      {
+        id: 43,
+        owner: "Aga's (Aelish Maredia)",
+        people: ["Aga's (Aelish Maredia)"],
+        task: "Provide appetizers (5:30–6:30 PM), dinner catering (8:30–9:30 PM), and table service for mocktails/soft drinks",
+        dayLabel: "Saturday (Nov 28)",
+        dayKey: "sat",
+        time: "Until 9:30 PM",
+        location: "Hyatt Hotel",
+        category: "Vendor",
+        remarks: "Add 3–4 servers during dinner specifically for table soft drinks.",
+        phone: "346-786-6000"
+      },
+      {
+        id: 44,
+        owner: "Kaushlesh Biyani",
+        people: ["Kaushlesh Biyani"],
+        task: "Wedding and Reception photography",
+        dayLabel: "Fri & Sat (Nov 27–28)",
+        dayKey: "fri",
+        multiDays: ["fri", "sat"],
+        time: "Until 11:00 PM (Sat)",
+        location: "Durgabari & Hyatt",
+        category: "Vendor",
+        remarks: "Covers both Friday Wedding at Durgabari and Saturday Reception at Hyatt.",
+        phone: "512-289-3545"
+      },
+      {
+        id: 45,
+        owner: "DJ Yogi G",
+        people: ["DJ Yogi G"],
+        task: "Reception music and dance floor entertainment",
+        dayLabel: "Saturday (Nov 28)",
+        dayKey: "sat",
+        time: "Until 11:00 PM",
+        location: "Hyatt Hotel",
+        category: "Vendor",
+        remarks: "Main dance block: 9:30 PM – 11:00 PM.",
+        phone: "281-989-4061"
+      },
+      {
+        id: 46,
+        owner: "Tapan & Dhruba",
+        people: ["Tapan", "Dhruba", "Partha", "Arpita"],
+        task: "Act as main escalation points of contact for Hyatt hotel and Wedding Planner",
+        dayLabel: "Fri & Sat (Nov 27–28)",
+        dayKey: "fri",
+        multiDays: ["fri", "sat"],
+        time: "End of events",
+        location: "Durgabari & Hyatt",
+        category: "Logistics",
+        remarks: "Secondary escalation outside of Partha/Arpita.",
+        phone: ""
+      },
+      {
+        id: 47,
+        owner: "Madhumita Pal",
+        people: ["Madhumita Pal"],
+        task: "Provide Sunday boxed breakfast for guests",
+        dayLabel: "Sunday (Nov 29)",
+        dayKey: "sun",
+        time: "Morning",
+        location: "Hyatt Hotel",
+        category: "Vendor",
+        remarks: "Confirmed Menu: Luchi, Alu'r dam, Singara, Chop, Sandesh.",
+        phone: "737-781-0572"
+      }
+    ];
+
+    // All 13 Vendors for Quick-Dial Drawer
+    const VENDORS = [
+      { name: "Moumita", role: "Mehendi Lunch & Friday Brunch", phone: "929-243-0347", window: "Thu & Fri" },
+      { name: "Firoze Blossom", role: "Durgabari Décor", phone: "832-433-5469", window: "Thu 10 AM & Fri" },
+      { name: "Sakshi", role: "Bridal & Reception Makeup", phone: "832-523-8504", window: "Fri & Sat 12 PM" },
+      { name: "Vicky Flower", role: "Garlands & Flowers", phone: "713-298-2817", window: "Fri 2:00 PM" },
+      { name: "Maricella", role: "Venue / Food / Cake Logistics", phone: "832-480-7789", window: "Thu, Fri & Sat" },
+      { name: "Nirvana / Monsour", role: "Tea & Foyer Service", phone: "832-882-1789", window: "Fri 5:00 PM" },
+      { name: "Chris Peltier & Rajiv", role: "Sound & Stage Lighting", phone: "713-296-9050", window: "Fri until 10:30 PM" },
+      { name: "Rahi Restaurant", role: "Sat Chole Bhature Brunch", phone: "469-922-8256", window: "Sat 11:00 AM+" },
+      { name: "Miraj / Evermore Décor", role: "Ballroom Reception Décor", phone: "832-779-3333", window: "Sat Before 5 PM" },
+      { name: "Aga's / Aelish Maredia", role: "Reception Catering & Drinks", phone: "346-786-6000", window: "Sat 5:30–9:30 PM" },
+      { name: "Kaushlesh Biyani", role: "Photography", phone: "512-289-3545", window: "Fri & Sat" },
+      { name: "DJ Yogi G", role: "Reception Music & Dance", phone: "281-989-4061", window: "Sat until 11 PM" },
+      { name: "Madhumita Pal", role: "Sunday Boxed Breakfast", phone: "737-781-0572", window: "Sun Morning" }
+    ];
+
+    // LocalStorage key for task persistence
+    const STORAGE_KEY = "ishaan_pavani_wedding_completed_v1";
+
+    // Application State
+    const state = {
+      completedIds: new Set(),
+      selectedDay: "all",
+      selectedCategory: "all",
+      selectedPerson: "all",
+      searchQuery: "",
+      hideCompleted: false,
+      cueCollapsed: false
+    };
+
+    // Load saved checkmarks from localStorage
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            state.completedIds = new Set(parsed);
+          }
+        }
+      } catch (e) {
+        console.warn("Could not read localStorage:", e);
+      }
+    }
+
+    // Persist checkmarks to localStorage
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(state.completedIds)));
+      } catch (e) {
+        console.warn("Could not write localStorage:", e);
+      }
+    }
+
+    // Populate "My Tasks" Person/Owner Dropdown dynamically
+    function populatePersonDropdown() {
+      const select = document.getElementById("person-filter");
+      const personSet = new Set();
+
+      TASKS.forEach((t) => {
+        t.people.forEach((p) => personSet.add(p));
+      });
+
+      const sortedPeople = Array.from(personSet).sort((a, b) => a.localeCompare(b));
+      sortedPeople.forEach((person) => {
+        const opt = document.createElement("option");
+        opt.value = person;
+        opt.textContent = person;
+        select.appendChild(opt);
+      });
+    }
+
+    // Render Vendor Directory inside Quick-Dial Drawer
+    function renderVendorDrawer() {
+      const container = document.getElementById("vendor-directory-list");
+      container.innerHTML = VENDORS.map((v) => `
+        <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center justify-between gap-3">
+          <div class="min-w-0">
+            <div class="font-bold text-slate-900 text-sm truncate">${v.name}</div>
+            <div class="text-xs text-slate-600 truncate">${v.role}</div>
+            <div class="text-[11px] font-semibold text-amber-800 mt-0.5">${v.window}</div>
+          </div>
+          <a
+            href="tel:${v.phone}"
+            class="shrink-0 inline-flex items-center gap-1.5 bg-maroon hover:bg-maroon-dark text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xs transition active:scale-95"
+          >
+            <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+            <span>${v.phone}</span>
+          </a>
+        </div>
+      `).join("");
+    }
+
+    // Update top sticky progress bar
+    function updateProgressBar() {
+      const total = TASKS.length;
+      const done = state.completedIds.size;
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+      document.getElementById("progress-label").textContent = `${done} / ${total} Tasks Complete`;
+      document.getElementById("progress-percent").textContent = `${pct}%`;
+      document.getElementById("progress-bar-fill").style.width = `${pct}%`;
+    }
+
+    // Get category badge styling
+    function getCategoryBadge(cat) {
+      if (cat === "Ceremony Ritual") {
+        return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300">🪔 Ceremony Ritual</span>`;
+      }
+      if (cat === "Vendor") {
+        return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-200">🤝 Vendor</span>`;
+      }
+      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">📋 Logistics</span>`;
+    }
+
+    // Get location badge styling
+    function getLocationBadge(loc) {
+      let icon = "map-pin";
+      let classes = "bg-emerald-50 text-emerald-800 border-emerald-200";
+      if (loc.includes("Durgabari")) {
+        classes = "bg-rose-50 text-maroon border-rose-200";
+      } else if (loc.includes("Hyatt")) {
+        classes = "bg-sky-50 text-sky-800 border-sky-200";
+      }
+      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold border ${classes}">
+        <i data-lucide="${icon}" class="w-3 h-3"></i>
+        <span>${loc}</span>
+      </span>`;
+    }
+
+    // Filter tasks according to current state
+    function getFilteredTasks() {
+      const q = state.searchQuery.trim().toLowerCase();
+
+      return TASKS.filter((t) => {
+        // Day filter
+        if (state.selectedDay !== "all") {
+          const matchesPrimary = t.dayKey === state.selectedDay;
+          const matchesMulti = Array.isArray(t.multiDays) && t.multiDays.includes(state.selectedDay);
+          if (!matchesPrimary && !matchesMulti) return false;
+        }
+
+        // Category filter
+        if (state.selectedCategory !== "all" && t.category !== state.selectedCategory) {
+          return false;
+        }
+
+        // Person filter
+        if (state.selectedPerson !== "all" && !t.people.includes(state.selectedPerson)) {
+          return false;
+        }
+
+        // Hide completed toggle
+        if (state.hideCompleted && state.completedIds.has(t.id)) {
+          return false;
+        }
+
+        // Keyword search
+        if (q) {
+          const haystack = `${t.owner} ${t.task} ${t.dayLabel} ${t.time} ${t.location} ${t.category} ${t.remarks}`.toLowerCase();
+          if (!haystack.includes(q)) return false;
+        }
+
+        return true;
+      });
+    }
+
+    // Render task cards & ritual banner
+    function render() {
+      updateProgressBar();
+
+      // Show/Hide Ceremony Ritual Cue Sheet banner
+      const cueBanner = document.getElementById("ritual-cue-banner");
+      const showCueBanner =
+        (state.selectedDay === "fri" || state.selectedCategory === "Ceremony Ritual") &&
+        state.selectedCategory !== "Vendor";
+      if (showCueBanner) {
+        cueBanner.classList.remove("hidden");
+      } else {
+        cueBanner.classList.add("hidden");
+      }
+
+      const filtered = getFilteredTasks();
+      const container = document.getElementById("task-list-container");
+      const emptyState = document.getElementById("empty-state");
+      const statusText = document.getElementById("filter-status-text");
+      const resetFiltersBtn = document.getElementById("reset-filters-btn");
+
+      const hasActiveFilters =
+        state.selectedDay !== "all" ||
+        state.selectedCategory !== "all" ||
+        state.selectedPerson !== "all" ||
+        state.searchQuery.trim() !== "" ||
+        state.hideCompleted;
+
+      resetFiltersBtn.classList.toggle("hidden", !hasActiveFilters);
+      statusText.innerHTML = `Showing <span class="font-bold text-slate-900">${filtered.length}</span> of <span class="font-bold text-slate-900">${TASKS.length}</span> tasks`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        lucide.createIcons();
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+
+      container.innerHTML = filtered.map((t) => {
+        const isDone = state.completedIds.has(t.id);
+        return `
+          <article
+            data-task-id="${t.id}"
+            class="task-card bg-white rounded-2xl border ${isDone ? "border-emerald-200 bg-emerald-50/30 opacity-75" : "border-slate-200/90 shadow-xs hover:border-maroon/40"} p-3.5 sm:p-4"
+          >
+            <div class="flex items-start gap-3">
+              <!-- Large Touch-Friendly Completion Checkbox -->
+              <button
+                type="button"
+                data-toggle-id="${t.id}"
+                aria-label="Mark task ${isDone ? "incomplete" : "complete"}"
+                aria-pressed="${isDone}"
+                class="mt-0.5 w-7 h-7 rounded-xl border-2 flex items-center justify-center shrink-0 transition cursor-pointer ${
+                  isDone
+                    ? "bg-emerald-600 border-emerald-600 text-white"
+                    : "border-slate-300 bg-white hover:border-maroon text-transparent"
+                }"
+              >
+                <i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>
+              </button>
+
+              <!-- Card Body -->
+              <div class="flex-1 min-w-0">
+                <!-- Top Meta Badges: Day & Time + Location + Category -->
+                <div class="flex flex-wrap items-center gap-1.5 mb-2">
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-maroon-tint text-maroon border border-rose-200">
+                    <i data-lucide="clock" class="w-3 h-3"></i>
+                    <span>${t.dayLabel} • ${t.time}</span>
+                  </span>
+                  ${getLocationBadge(t.location)}
+                  ${getCategoryBadge(t.category)}
+                </div>
+
+                <!-- Owner / Lead Bold Pill -->
+                <div class="mb-1.5 flex flex-wrap items-center justify-between gap-2">
+                  <span class="inline-flex items-center gap-1.5 bg-slate-900 text-white text-xs font-bold px-2.5 py-1 rounded-lg">
+                    <i data-lucide="user" class="w-3 h-3 text-gold"></i>
+                    <span>${t.owner}</span>
+                  </span>
+
+                  ${
+                    t.phone
+                      ? `<a
+                          href="tel:${t.phone}"
+                          class="inline-flex items-center gap-1.5 bg-gold-light hover:bg-gold/30 text-maroon font-bold text-xs px-2.5 py-1 rounded-lg border border-gold/60 transition active:scale-95"
+                        >
+                          <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                          <span>Call ${t.phone}</span>
+                        </a>`
+                      : ""
+                  }
+                </div>
+
+                <!-- Task Description -->
+                <h3 class="text-sm sm:text-base font-bold leading-snug ${isDone ? "line-through text-slate-500" : "text-slate-900"}">
+                  ${t.task}
+                </h3>
+
+                <!-- Remarks / Operational Notes -->
+                ${
+                  t.remarks
+                    ? `<p class="mt-1.5 text-xs sm:text-[13px] text-slate-600 bg-ivory rounded-xl px-3 py-2 border border-slate-200/70 leading-relaxed">
+                        <span class="font-semibold text-slate-700">Note:</span> ${t.remarks}
+                      </p>`
+                    : ""
+                }
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      lucide.createIcons();
+    }
+
+    // Show toast notification
+    let toastTimeout = null;
+    function showToast(msg) {
+      const banner = document.getElementById("toast-banner");
+      const text = document.getElementById("toast-message");
+      text.textContent = msg;
+      banner.classList.remove("hidden");
+      banner.classList.add("flex");
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        banner.classList.add("hidden");
+        banner.classList.remove("flex");
+      }, 3200);
+    }
+
+    // Copy WhatsApp-friendly status summary to clipboard using execCommand fallback
+    function exportStatusToClipboard() {
+      const completedTasks = TASKS.filter((t) => state.completedIds.has(t.id));
+      const pendingTasks = TASKS.filter((t) => !state.completedIds.has(t.id));
+
+      const filterNote =
+        state.selectedDay !== "all" || state.selectedPerson !== "all" || state.selectedCategory !== "all"
+          ? ` (Filtered view active)`
+          : "";
+
+      let lines = [
+        `*ISHAAN & PAVANI — HOUSTON WEDDING STATUS*`,
+        `Progress: *${completedTasks.length} / ${TASKS.length} Tasks Complete*${filterNote}`,
+        ``
+      ];
+
+      if (completedTasks.length > 0) {
+        lines.push(`✅ *COMPLETED (${completedTasks.length}):*`);
+        completedTasks.forEach((t) => {
+          lines.push(`• [✓] ${t.dayLabel} (${t.time}) — *${t.owner}*: ${t.task}`);
+        });
+        lines.push(``);
+      }
+
+      lines.push(`⏳ *PENDING (${pendingTasks.length}):*`);
+      pendingTasks.slice(0, 25).forEach((t) => {
+        lines.push(`• [ ] ${t.dayLabel} (${t.time}) — *${t.owner}*: ${t.task}`);
+      });
+      if (pendingTasks.length > 25) {
+        lines.push(`...and ${pendingTasks.length - 25} more pending tasks.`);
+      }
+
+      const summaryText = lines.join("\n");
+
+      const textarea = document.createElement("textarea");
+      textarea.value = summaryText;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        document.execCommand("copy");
+        showToast("WhatsApp status summary copied to clipboard!");
+      } catch (err) {
+        showToast("Unable to copy automatically. Please try again.");
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+
+    // Wire up all event listeners
+    function initEventListeners() {
+      // Task checkbox toggle (event delegation)
+      document.getElementById("task-list-container").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-toggle-id]");
+        if (!btn) return;
+        const id = Number(btn.getAttribute("data-toggle-id"));
+        if (state.completedIds.has(id)) {
+          state.completedIds.delete(id);
+        } else {
+          state.completedIds.add(id);
+        }
+        saveState();
+        render();
+      });
+
+      // Day pills
+      document.querySelectorAll(".day-pill").forEach((pill) => {
+        pill.addEventListener("click", () => {
+          state.selectedDay = pill.getAttribute("data-day");
+          document.querySelectorAll(".day-pill").forEach((p) => {
+            const active = p === pill;
+            p.className = active
+              ? "day-pill active-day shrink-0 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer bg-maroon text-white shadow-sm"
+              : "day-pill shrink-0 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-300 hover:border-maroon";
+          });
+          render();
+        });
+      });
+
+      // Category tabs
+      document.querySelectorAll(".cat-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          state.selectedCategory = tab.getAttribute("data-cat");
+          document.querySelectorAll(".cat-tab").forEach((t) => {
+            const active = t === tab;
+            t.className = active
+              ? "cat-tab active-cat shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-slate-800 text-white"
+              : "cat-tab shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-200 hover:bg-slate-100";
+          });
+          render();
+        });
+      });
+
+      // Person dropdown
+      document.getElementById("person-filter").addEventListener("change", (e) => {
+        state.selectedPerson = e.target.value;
+        render();
+      });
+
+      // Search input & clear button
+      const searchInput = document.getElementById("search-input");
+      const clearSearchBtn = document.getElementById("clear-search-btn");
+      searchInput.addEventListener("input", (e) => {
+        state.searchQuery = e.target.value;
+        clearSearchBtn.classList.toggle("hidden", state.searchQuery.length === 0);
+        render();
+      });
+      clearSearchBtn.addEventListener("click", () => {
+        state.searchQuery = "";
+        searchInput.value = "";
+        clearSearchBtn.classList.add("hidden");
+        render();
+      });
+
+      // Hide completed toggle
+      document.getElementById("hide-completed-toggle").addEventListener("change", (e) => {
+        state.hideCompleted = e.target.checked;
+        render();
+      });
+
+      // Export / Share button
+      document.getElementById("export-status-btn").addEventListener("click", exportStatusToClipboard);
+
+      // Reset filters
+      function resetAllFilters() {
+        state.selectedDay = "all";
+        state.selectedCategory = "all";
+        state.selectedPerson = "all";
+        state.searchQuery = "";
+        state.hideCompleted = false;
+
+        document.getElementById("person-filter").value = "all";
+        searchInput.value = "";
+        clearSearchBtn.classList.add("hidden");
+        document.getElementById("hide-completed-toggle").checked = false;
+
+        document.querySelectorAll(".day-pill").forEach((p) => {
+          const isAll = p.getAttribute("data-day") === "all";
+          p.className = isAll
+            ? "day-pill active-day shrink-0 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer bg-maroon text-white shadow-sm"
+            : "day-pill shrink-0 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-300 hover:border-maroon";
+        });
+
+        document.querySelectorAll(".cat-tab").forEach((t) => {
+          const isAll = t.getAttribute("data-cat") === "all";
+          t.className = isAll
+            ? "cat-tab active-cat shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-slate-800 text-white"
+            : "cat-tab shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer bg-white text-slate-700 border border-slate-200 hover:bg-slate-100";
+        });
+
+        render();
+      }
+
+      document.getElementById("reset-filters-btn").addEventListener("click", resetAllFilters);
+      document.getElementById("empty-reset-btn").addEventListener("click", resetAllFilters);
+
+      // Collapse/Expand Ceremony Cue Sheet
+      document.getElementById("toggle-cue-details").addEventListener("click", (e) => {
+        state.cueCollapsed = !state.cueCollapsed;
+        const steps = document.getElementById("cue-steps-container");
+        steps.classList.toggle("hidden", state.cueCollapsed);
+        e.target.textContent = state.cueCollapsed ? "Expand Steps" : "Collapse";
+      });
+
+      // Quick-Dial Drawer Open/Close
+      const modal = document.getElementById("quick-dial-modal");
+      document.getElementById("open-drawer-btn").addEventListener("click", () => {
+        modal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      });
+      function closeDrawer() {
+        modal.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+      document.getElementById("close-drawer-btn").addEventListener("click", closeDrawer);
+      document.getElementById("drawer-backdrop").addEventListener("click", closeDrawer);
+
+      // Reset Progress Confirmation Modal
+      const confirmModal = document.getElementById("confirm-reset-modal");
+      document.getElementById("reset-progress-btn").addEventListener("click", () => {
+        if (state.completedIds.size === 0) {
+          showToast("No completed tasks to clear.");
+          return;
+        }
+        confirmModal.classList.remove("hidden");
+        confirmModal.classList.add("flex");
+      });
+      document.getElementById("cancel-reset-btn").addEventListener("click", () => {
+        confirmModal.classList.add("hidden");
+        confirmModal.classList.remove("flex");
+      });
+      document.getElementById("confirm-reset-btn").addEventListener("click", () => {
+        state.completedIds.clear();
+        saveState();
+        confirmModal.classList.add("hidden");
+        confirmModal.classList.remove("flex");
+        render();
+        showToast("All checkmarks cleared.");
+      });
+    }
+
+    // Boot application
+    document.addEventListener("DOMContentLoaded", () => {
+      loadState();
+      populatePersonDropdown();
+      renderVendorDrawer();
+      initEventListeners();
+      render();
+    });
+  </script>
+</body>
+</html>
